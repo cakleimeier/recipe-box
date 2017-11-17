@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
+import './App.css';
 
 export class ListContainer extends Component {
   constructor(props) {
@@ -28,6 +29,10 @@ export class ListContainer extends Component {
 
     closeModal(self) {
       self.setState({modalIsOpen: false});
+    }
+
+    closeParentModal() {
+      this.setState({modalIsOpen: false});
     }
 
     getParent() {
@@ -135,8 +140,19 @@ export class ListContainer extends Component {
     const recipes= this.state.recipes;
     
     return (
-      <section>
+      <section id="page">
         <h1>Recipe Box</h1>
+        <Add 
+          recipes={this.state.recipes}
+          handleChange={this.handleChange}
+          handleRecipe={this.handleRecipe}
+          addRecipe={this.addRecipe}
+
+          openModal={this.openModal}
+          closeModal={this.closeModal}
+          closeParentModal={this.closeParentModal}
+          getParent={this.getParent}
+        />
 
         <section id="recipeList">
           {Object.keys(recipes).map(function(key) {
@@ -152,22 +168,12 @@ export class ListContainer extends Component {
 
                 openModal={self.openModal}
                 closeModal={self.closeModal}
+                closeParentModal={self.closeParentModal}
                 getParent={self.getParent} 
               />
             );
           })}
         </section>
-
-        <Add 
-          recipes={this.state.recipes}
-          handleChange={this.handleChange}
-          handleRecipe={this.handleRecipe}
-          addRecipe={this.addRecipe}
-
-          openModal={this.openModal}
-          closeModal={this.closeModal}
-          getParent={this.getParent}
-        />
       </section>
     );
   }
@@ -223,9 +229,8 @@ class Recipe extends Component {
         >
           <article id="modal">
             <form acceptCharset="utf-8">
+              <legend>Recipe</legend>
               <fieldset>
-                <legend>Recipe</legend>
-
                 <label htmlFor="name">Recipe Name:</label>
                 <input 
                   required
@@ -234,7 +239,9 @@ class Recipe extends Component {
                   placeholder={this.props.recipe.title}
                   onChange={generateHandler('title', this.props.handleChange.bind(this))}
                 />
+              </fieldset>
 
+              <fieldset>
                 <label htmlFor="ingredients">Ingredients:</label>
                 <input
                   required
@@ -243,20 +250,20 @@ class Recipe extends Component {
                   placeholder={this.props.recipe.ingredients}
                   onChange={generateHandler('ingredients', this.props.handleChange.bind(this))}
                 />
-
-                <button
-                  type="button" 
-                  id={index} 
-                  onClick={generateHandler('edit',this.props.handleRecipe.bind(this))}
-                >Save Recipe</button>
-
-                <button 
-                  type="button" 
-                  id={index} 
-                  onClick={this.props.closeModal.bind(this)}
-                >Cancel</button>
-
               </fieldset>
+
+              <button
+                type="button" 
+                id={index} 
+                onClick={generateHandler('edit',this.props.handleRecipe.bind(this))}
+              >Save Recipe</button>
+
+              <button 
+                type="button" 
+                id={index} 
+                onClick={this.props.closeParentModal.bind(this)}
+              >Cancel</button>
+
             </form>
           </article>
         </Modal>
@@ -280,18 +287,18 @@ class Add extends Component {
     const generateHandler = (value, method) => e => method(e, value);
 
     return (
-      <section>
-        <button type="button" onClick={this.props.openModal.bind(this)}>Add</button>
+      <section id="buttonSection">
+        <button type="button" id="add" onClick={this.props.openModal.bind(this)}>Create New Recipe</button>
 
         <Modal 
           isOpen={this.state.modalIsOpen}
           parentSelector={this.props.getParent}
         >
           <article id="modal">
-            <form acceptCharset="utf-8">
-              <fieldset>
-                <legend>Add a New Recipe</legend>
+            <form acceptCharset="utf-8">  
+              <legend>Add a New Recipe</legend>
 
+              <fieldset>
                 <label htmlFor="name">Recipe Name:</label>
                 <input 
                   required
@@ -301,7 +308,9 @@ class Add extends Component {
                   placeholder="Enter recipe's name"
                   onChange={generateHandler('title', this.props.handleChange.bind(this))}
                 />
+              </fieldset>
 
+              <fieldset>
                 <label htmlFor="ingredients">Ingredients:</label>
                 <input
                   required 
@@ -311,17 +320,17 @@ class Add extends Component {
                   placeholder="Enter ingredients,separated,by,commas"
                   onChange={generateHandler('ingredients', this.props.handleChange.bind(this))}
                 />
-
-                <button
-                  type="submit" 
-                  onClick={generateHandler('new',this.props.handleRecipe.bind(this))}
-                >Add</button>
-
-                <button 
-                  type="button"
-                  onClick={this.props.closeModal.bind(this)}
-                >Cancel</button>
               </fieldset>
+
+              <button
+                type="submit" 
+                onClick={generateHandler('new',this.props.handleRecipe.bind(this))}
+              >Add</button>
+
+              <button 
+                type="button"
+                onClick={this.props.closeParentModal.bind(this)}
+              >Cancel</button>
             </form>
           </article>
         </Modal>

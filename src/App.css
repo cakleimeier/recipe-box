@@ -26,3 +26,110 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+#page {
+  font-size: 14pt;
+  font-family: 'Lato', sans-serif;
+  color: #30343F;
+
+  width: 75%;
+  margin: 0 auto;
+}
+
+#page h1 {
+  font-size: 2em;
+  color: #273469;
+  font-family: 'Raleway', sans-serif;
+}
+
+h2 {
+  color: #273469;
+  font-weight: normal;
+}
+
+#recipeList {
+  background-color: #FAFAFF;
+  border: 1px solid #E4D9FF;
+  border-radius: 5px;
+  padding: 0 1em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+article {
+  border-right: 1px solid #273469;
+  padding: 0 .75em;
+  margin: 1em 0;
+  flex: 0 1 30%;
+}
+
+article:last-of-type {
+  border-right: none;
+}
+
+article:nth-of-type(n+3) {
+  border-right: none;
+}
+
+article h2 {
+  text-transform: capitalize;
+}
+
+.recipeBody h3 {
+  font-size: 1em;
+  width: 90%;
+  margin: auto;
+}
+
+button {
+  background-color: #E4D9FF;
+  border: 1px solid #E4D9FF;
+  box-shadow: 0;
+  color: #30343F;
+  cursor: pointer;
+  font-family: 'Lato', sans-serif;
+  font-weight: 900;
+  margin: 0 1em 0 0;
+  padding: .5em 1em;
+  text-transform: uppercase;
+}
+
+#add {
+  font-size: 1em;
+  margin: 1em;
+}
+
+#buttonSection, h1 {
+  display: inline-block;
+  width: 49%;
+  text-align: center;
+}
+
+form {
+  width: 75%;
+  margin: 0 auto;
+}
+
+form legend {
+  font-size: 1.5em;
+  color: #273469;
+}
+
+form fieldset {
+  margin: 1em 1em 1em 0;
+  padding: 1em;
+}
+
+form label {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+form input {
+  margin-left: 1em;
+  min-width: 300px;
+  padding: .25em;
+}
+
